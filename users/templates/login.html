@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block extra_head %}
+<style>
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f7f7f7;
+    }
+    .login-box {
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+    }
+    .login-box h2 {
+        margin-bottom: 20px;
+        font-size: 2em;
+        color: #333;
+        text-align: center;
+    }
+    .login-box form {
+        display: flex;
+        flex-direction: column;
+    }
+    .login-box input {
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1em;
+    }
+    .login-box button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .login-box button:hover {
+        background-color: #0056b3;
+    }
+    .login-box .register-link {
+        margin-top: 10px;
+        text-align: center;
+    }
+    .login-box .register-link a {
+        color: #007bff;
+        text-decoration: none;
+    }
+    .login-box .register-link a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-box">
+        <h2>Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <div class="register-link">
+            <p>Don't have an account? <a href="{% url 'user:register' %}">Register here</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

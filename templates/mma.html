@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Products Shop{% endblock %}
+
+{% block extra_head %}
+<style>
+    .product {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin: 10px;
+        border-radius: 5px;
+        text-align: center;
+        width: 200px;
+    }
+    .product img {
+        max-width: 100%;
+        height: auto;
+    }
+    .product-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+    .buy-button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .buy-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>MMA Products</h1>
+<div class="product-container">
+    {% for product in products %}
+    <div class="product">
+        {% if product.image  %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        {% else %}
+        <img src="https://via.placeholder.com/150" alt="No Image">
+        {% endif %}
+        <h2>{{ product.name }}</h2>
+        <p>{{ product.description }}</p>
+        <p>Made in - {{ product.made_in }}</p>
+        <p><strong>${{ product.price }}</strong></p>
+        <form action="{% url 'products:order-create' %}" method="post">
+            {% csrf_token %}
+            {{ order_form.as_p }}
+            <input type="hidden" name="product" value="{{ product.price }}">
+            <button type="submit" class="buy-button">Buy</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
